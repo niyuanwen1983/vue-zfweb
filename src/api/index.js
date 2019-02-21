@@ -14,3 +14,7 @@ axios.interceptors.response.use((res) => {
 export const getIndex = () => {
   return axios.get('/IndexList')
 }
+
+export const getOthers = () => {
+  return axios.get('/IndexPicture')
+}

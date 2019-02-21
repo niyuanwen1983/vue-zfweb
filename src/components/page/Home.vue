@@ -1,12 +1,22 @@
 <template>
   <div>
     <section class="main">
-      <div class="container">
-        <div class="flexslider">
-          <ul class="slides"></ul>
-        </div>
-        <img src="../../assets/img/Index/advantage.png" alt="">
-      </div>
+      <swiper v-ref:swiper
+              direction="horizontal"
+              :mousewheel-control="true"
+              :performance-mode="false"
+              :pagination-visible="true"
+              :pagination-clickable="true"
+              :autoplay="true"
+              autoplay="true"
+              :loop="true">
+        <template v-if="!isLoading" v-for="(item,index) in pictureArr">
+          <div style="color:black;" :index="index"><img :src="item.picture" alt=""></div>
+        </template>
+<!--        <div style="color:black;">aaaaa</div>
+        <div style="color:black;">Page 2</div>
+        <div style="color:black;">Page 3</div>-->
+      </swiper>
       <div>
         <div class="news">
           <div class="notice">
@@ -49,27 +59,25 @@
               <div class="branches">查看网点</div>
             </a>
           </div>
-          <div class="first_invest_center">
+          <div class="first_invest_center" v-if="!isLoading">
             <img src="../../assets/img/Index/first_invest_label.png" alt=""
                  style="position:absolute;top:6px;left:300px;z-index:90;">
             <a href="/Invest/list"><span class="label_content">新手专享</span></a>
             <div class="percent_month">
               <div class="index_year">
-                <p id="year_rate" class="percent"></p>
+                <p id="year_rate" class="percent">{{projectNew.yearrate}}</p>
                 <p class="percent_little"></p>
                 <p class="percent_plus" style="display: none;"></p>
               </div>
-              <p id="loanmonth" class="month"></p>
+              <p id="loanmonth" class="month">{{projectNew.loanmonth}}{{projectNew.dayOrMonth}}</p>
               <p class="month_little"></p>
             </div>
             <div class="first_desc">
               <p class="first_desc_left">协议约定年利率</p>
-              <!--<img class="question_mark_big pop-title" src="~/assets/img/Common/question_mark.png" alt="">-->
-
+              <img class="question_mark_big pop-title" src="../../assets/img/Common/question_mark.png" alt="">
               <div class="titleTips add_style" style="color:#999999;display: none;">
                 借款人履约意愿及能力等因素、借款人提前还款等情况都会影响最终收益率
               </div>
-
               <p class="first_desc_right">期限</p>
             </div>
             <div class="invest_progress"></div>
@@ -86,7 +94,7 @@
               <!--<a class="lend_detail">详细规则</a>-->
             </div>
           </div>
-          <div class="car_lazy"></div>
+          <div class="car_lazy" v-if="isLoading"></div>
           <div class="first_invest_right">
             <a>
               <div class="lazy_ad"></div>
@@ -108,18 +116,35 @@
               </div>
             </div>
           </div>
-          <div class="lazyload">
-
-          </div>
-          <div class="lazyload">
-
-          </div>
-          <div class="lazyload">
-
-          </div>
-          <div class="lazyload">
-
-          </div>
+          <template v-if="isLoading">
+            <div class="lazyload">
+            </div>
+            <div class="lazyload">
+            </div>
+            <div class="lazyload">
+            </div>
+            <div class="lazyload">
+            </div>
+          </template>
+          <template v-else v-for="(item,index) in projectArr">
+            <div class="investment_item canlend" :index="index">
+              <div class="investment_item_content" style="position:relative;"><p
+                style="float:left;padding-left:31px;font-size:14px;">第{{item.title_no}}期</p><span
+                class="percent investment_margin">{{item.yearrate}}</span><span
+                class="percent_little">%</span>
+                <p class="investment_desc">协议约定年利率</p><img class="question_mark pop-title"
+                                                           src="Content/Img/Common/question_mark.png" alt="">
+                <div class="titleTips" style="display: none;">借款人履约意愿及能力等因素、借款人提前还款等情况都会影响最终收益率</div>
+                <p class="return_type">{{item.repayment == 1 | repayment}}</p>
+                <div class="invest_progress_short"></div>
+                <div class="invest_progress_short_now" :style="{width: item.tenderspeed* 166 / 100 + 'px' }">
+                </div>
+                <span class="item_desc item_left"
+                      style="font-size:16px;color:#FB4453;font-weight:bold;position:absolute;top:23px;right:31px;margin:0;">{{item.loanmonth}}{{item.dayOrMonth}}</span><span
+                  class="item_desc item_right" style="width:100%;text-align:center;display:block;margin:0;">剩余：{{item.tendermoney}}元&nbsp;&nbsp;可出借</span>
+              </div>
+            </div>
+          </template>
         </div>
         <!--活动-->
         <div class="activity">
@@ -131,10 +156,6 @@
             <p class="investment_list_type list_type_2">债权转让</p>
           </div>
           <div class="investment_list_right" style="position:relative;">
-            @*
-            <div
-              style="width:100%;height:56px;background:rgba(255,255,255,1);font-weight:bold;position:absolute;top:60px;left:0;z-index:0;"></div>
-            *@
             <div class="zq_lazy"></div>
             <div class="sz_sq" style="width:100%;position:absolute;top:0;left:0;z-index:5;">
               <div id="sz_scroll" style="height:260px;overflow:hidden;">
@@ -311,17 +332,42 @@
         </div>
       </div>
     </section>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-  import {getIndex} from "../../api";
+  //import {getIndex} from "../../api";
+  import * as getApi from "../../api";
+  import Swiper from 'vue-swiper'
+  import Footer from "../common/Footer"
 
   export default {
+    el: '.main',
     name: "Home",
+    components: {
+      Swiper,
+      Footer
+    },
+    data() {
+      return {
+        isLoading: true,
+        projectNew: null,
+        projectArr: [],
+        pictureArr: []
+      }
+    },
     methods: {
       async getData() {
-        let projects = await getIndex()
+        let projects = await getApi.getIndex()
+        let others = await getApi.getOthers()
+
+        this.isLoading = false
+        this.projectNew = projects.Result.HomeLoanDt
+        this.projectArr = projects.Result.HomeLoanDt1
+
+        this.pictureArr = others.Result.bannerList
+
         debugger
       }
     },
