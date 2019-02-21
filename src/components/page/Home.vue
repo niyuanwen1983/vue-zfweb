@@ -1,21 +1,11 @@
 <template>
   <div>
+    <Header></Header>
+    <FixedHeader></FixedHeader>
     <section class="main">
-      <swiper v-ref:swiper
-              direction="horizontal"
-              :mousewheel-control="true"
-              :performance-mode="false"
-              :pagination-visible="true"
-              :pagination-clickable="true"
-              :autoplay="true"
-              autoplay="true"
-              :loop="true">
-        <template v-if="!isLoading" v-for="(item,index) in pictureArr">
-          <div style="color:black;" :index="index"><img :src="item.picture" alt=""></div>
-        </template>
-<!--        <div style="color:black;">aaaaa</div>
-        <div style="color:black;">Page 2</div>
-        <div style="color:black;">Page 3</div>-->
+      <swiper :options="swiperOption">
+        <swiper-slide v-for="(slide, index) in pictureArr" :key="index"><img :src="slide.picture" alt=""></swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
       <div>
         <div class="news">
@@ -339,22 +329,38 @@
 <script>
   //import {getIndex} from "../../api";
   import * as getApi from "../../api";
-  import Swiper from 'vue-swiper'
+  import Header from "../common/Header"
+  import FixedHeader from "../common/FixedHeader"
   import Footer from "../common/Footer"
+  import 'swiper/dist/css/swiper.css'
+
+  import {swiper, swiperSlide} from 'vue-awesome-swiper'
 
   export default {
-    el: '.main',
     name: "Home",
     components: {
-      Swiper,
+      FixedHeader,
+      swiper,
+      swiperSlide,
+      Header,
       Footer
+    },
+    computed: {
+      swiper() {
+        return this.$refs.mySwiper.swiper
+      }
     },
     data() {
       return {
         isLoading: true,
         projectNew: null,
         projectArr: [],
-        pictureArr: []
+        pictureArr: [],
+        swiperOption: {
+          pagination: {
+            el: '.swiper-pagination'
+          }
+        }
       }
     },
     methods: {
