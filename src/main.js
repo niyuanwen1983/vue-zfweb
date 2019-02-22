@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import './assets/css/common.css'
 import * as custom from './common/filters/custom'
+import Loading from "./components/common/loading/index"
+
+Vue.use(Loading);
 
 Vue.config.productionTip = false
 

@@ -113,10 +113,6 @@
       window.addEventListener("scroll", function () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 
-        console.log(scrollTop)
-
-        debugger
-
         if (scrollTop > 40) {
           document.getElementsByClassName('div_fixed')[0].style.position = 'fixed'
           document.getElementsByClassName('div_fixed')[0].style.top = 0

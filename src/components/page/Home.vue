@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :isShow="isLoading"></loading>
     <Header></Header>
     <FixedHeader></FixedHeader>
     <section class="main">
@@ -329,6 +330,7 @@
 <script>
   //import {getIndex} from "../../api";
   import * as getApi from "../../api";
+  import loading from "../common/loading/Loading"
   import Header from "../common/Header"
   import FixedHeader from "../common/FixedHeader"
   import Footer from "../common/Footer"
@@ -343,7 +345,8 @@
       swiper,
       swiperSlide,
       Header,
-      Footer
+      Footer,
+      loading
     },
     computed: {
       swiper() {
@@ -373,8 +376,6 @@
         this.projectArr = projects.Result.HomeLoanDt1
 
         this.pictureArr = others.Result.bannerList
-
-        debugger
       }
     },
     mounted() {
