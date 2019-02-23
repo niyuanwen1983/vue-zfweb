@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :isShow="isLoading"></loading>
     <Header></Header>
     <FixedHeader></FixedHeader>
     <section class="main">
