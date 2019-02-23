@@ -3,12 +3,17 @@
     <div class="headDiv">
       <div class="headLeft">
         <span class="color_red">欢迎来到智富贷！</span>
-        <span class="color_black">上股交挂牌代码：202730</span><a href="https://www.zhifudai.com"
-                                                          style="color:#FF9600;margin-left:40px;">换回旧版</a>
+        <span class="color_black">上股交挂牌代码：202730</span>
       </div>
-      <div class="headRight">
-        <a class="color_orange" href="/Login">登录</a>
-        <a class="username" style="display:none;" href="/Account/myaccount"></a>
+      <div class="">
+        <template v-if="!isLogined">
+          <router-link to='/Login'>
+            <a class="color_orange" href="javascript:void(0);">登录</a>
+          </router-link>
+        </template>
+        <template v-else>
+          <span class="username">{{userName}}</span>
+        </template>
         <span class="vertical_line"></span>
         <a class="color_orange" href="/Login/regist">注册</a>
         <a class="logout" style="display:none;" href="/Login/SignOut">退出</a>
@@ -32,8 +37,22 @@
 </template>
 
 <script>
+  import * as common from '../../common/common'
+
   export default {
-    name: "Header"
+    name: "Header",
+    data() {
+      return {
+        isLogined: false,
+        userName: ''
+      }
+    },
+    mounted() {
+      if (!common.isEmpty(sessionStorage.getItem('name'))) {
+        this.isLogined = true
+        this.userName = sessionStorage.getItem('name')
+      }
+    }
   }
 </script>
 
