@@ -1,9 +1,9 @@
 let loadTemp = require('./Loading.vue').default; // cli3.0以后引入vue模板需要default
 
 let Load = {}; // 定义插件对象
-Load.install = (Vue,options) => { // Vue的install方法,用于定义vue插件
-                                  // 如果存在loading 不重复创建DOM
-  if(document.getElementsByClassName('.load-model').length) return;
+Load.install = (Vue, options) => { // Vue的install方法,用于定义vue插件
+  // 如果存在loading 不重复创建DOM
+  if (document.getElementsByClassName('.load-model').length) return;
 
   let lTemp = Vue.extend(loadTemp);
 
@@ -15,12 +15,12 @@ Load.install = (Vue,options) => { // Vue的install方法,用于定义vue插件
   document.body.appendChild(tpl);
 
   Vue.prototype.$loading = { // 在Vue的原型上添加实例方法,以全局调用
-    show(options){
-      if(options == "loading"){
+    show(options) {
+      if (options == "loading") {
         $vm.showLoading = true;
       }
     },
-    hide(){
+    hide() {
       $vm.showLoading = false;
     }
   }

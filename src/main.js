@@ -17,8 +17,13 @@ Object.keys(custom).forEach(key => {
 })
 
 import Loading from './components/common/loading'
+//import Confirm from './components/common/confirm'
 
 Vue.use(Loading)
+//Vue.use(Confirm)
+
+import Confirm from './components/common/confirm'
+Vue.prototype.$my_confirm = Confirm.install;
 
 /* eslint-disable no-new */
 window.vm = new Vue({

@@ -48,7 +48,7 @@
                     <p class="yyCode sss" style="display: none;">请注意接听语音验证</p>
                   </li>
                   <li class="lg_0001_li_login" style="background:#FB4251;">
-                    <a id="loginBtn" class="loginBtn" @click="doLogin">立即登录</a>
+                    <a id="loginBtn" class="loginBtn" @click="showConfirm">立即登录</a>
                   </li>
                   <li class="lg_0001_li_regist">
                     <p>没有账号？
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import * as common from '../../common/common'
   import * as getApi from "../../api"
 
@@ -86,7 +87,6 @@
        * 登录
        */
       async doLogin() {
-        debugger
         if (common.isEmpty(this.userAccount)) {
           alert('请输入账号！')
           return false
@@ -101,10 +101,17 @@
         sessionStorage.setItem('name', res.Info.name)
         sessionStorage.setItem('token', res.Token)
 
-        debugger
-
         this.$router.push('/')
-      }
+      },
+      showConfirm() {
+        this.$my_confirm('是否登录?', {
+          yesBtnText: '登录',
+        }).then(() => {
+          this.doLogin()
+        }).catch(() => {
+          //点取消
+        });
+      },
     }
   }
 </script>
