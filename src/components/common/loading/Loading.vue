@@ -25,7 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9;
+    z-index: 10;
     /*background:rgba(255,255,255,0.8);*/
     /* background:rgba(0,0,0,0.6); */
   }

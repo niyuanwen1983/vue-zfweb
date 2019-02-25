@@ -355,6 +355,7 @@
     data() {
       return {
         isLoading: true,
+        isLoading2: true,
         projectNew: null,
         projectArr: [],
         pictureArr: [],
@@ -368,17 +369,27 @@
     methods: {
       async getData() {
         let projects = await getApi.getIndex()
-        let others = await getApi.getOthers()
+        //let others = await getApi.getOthers()
 
         this.isLoading = false
         this.projectNew = projects.Result.HomeLoanDt
         this.projectArr = projects.Result.HomeLoanDt1
 
+        //this.pictureArr = others.Result.bannerList
+      },
+      async getData2() {
+        let others = await getApi.getOthers()
+
+        //this.isLoading2 = false
+        //this.projectNew = projects.Result.HomeLoanDt
+        //this.projectArr = projects.Result.HomeLoanDt1
+
         this.pictureArr = others.Result.bannerList
       }
     },
     mounted() {
-      this.getData();
+      this.getData()
+      this.getData2()
     }
   }
 </script>

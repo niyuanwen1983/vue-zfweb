@@ -5,7 +5,7 @@
         <span class="color_red">欢迎来到智富贷！</span>
         <span class="color_black">上股交挂牌代码：202730</span>
       </div>
-      <div class="">
+      <div class="" style="float:right;padding:10px 0 0 0;">
         <template v-if="!isLogined">
           <router-link to='/Login'>
             <a class="color_orange" href="javascript:void(0);">登录</a>
@@ -15,7 +15,7 @@
           <span class="username">{{userName}}</span>
         </template>
         <span class="vertical_line"></span>
-        <a class="color_orange" href="/Login/regist">注册</a>
+        <a class="color_orange" href="/Login/regist" v-if="!isLogined">注册</a>
         <a class="logout" style="display:none;" href="/Login/SignOut">退出</a>
         <a class="color_black new_guide" href="/More/guide">新手攻略</a>
         <a id="downloadapp" class="color_black" href="/DownLoad/appDownload">下载客户端</a><a class="cm_0001_a_risk"
