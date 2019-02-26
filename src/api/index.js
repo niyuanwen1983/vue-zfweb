@@ -9,6 +9,9 @@ function startLoading() {    //使用Element loading-start 方法
 }
 
 function endLoading() {    //使用Element loading-close 方法
+  /*setTimeout(() => {
+    Vue.prototype.$loading.hide();
+  }, 3000);*/
   Vue.prototype.$loading.hide()
 }
 

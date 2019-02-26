@@ -1,15 +1,15 @@
 <template>
   <transition name="fade">
     <div class="confirm-wrap" v-if="visible">
-      <div class="confirm">
+      <div class="confirm" :style="{marginTop:halfHeight+'px'}" style="padding:20px 0 0 0;">
         <div class="hd">
           {{title}}
           <i class="btn-close iconfont icon-close" @click="handleAction('close')"></i>
         </div>
-        <div class="bd">
+        <div class="bd" style="font-size:20px;height:100px;margin:20px 0 0 0;">
           <i v-if="type!=''" class="icon-type iconfont" :class="'icon-'+type"></i>{{content}}
         </div>
-        <div class="ft">
+        <div class="ft" style="text-align:center;">
           <a href="javscript:void(0)" class="btn btn-primary" @click="handleAction('yes')">{{yesBtnText}}</a>
           <a href="javscript:void(0)" class="btn btn-default" @click="handleAction('cancel')">{{cancelBtnText}}</a>
         </div>
@@ -30,7 +30,13 @@
         yesBtnText: '确定',
         cancelBtnText: '取消',
         type: '',
-        promiseStatus: null,
+        promiseStatus: null
+      }
+    },
+    computed: {
+      halfHeight: function () {
+        debugger
+        return (window.innerHeight - 234) / 2
       }
     },
     watch: {
@@ -87,7 +93,7 @@
   .btn {
     width: 160px;
     height: 40px;
-    margin: 40px auto 0 auto;
+    margin: 40px;
     background: #fb4251;
     border-radius: 4px;
     font-size: 14px;
@@ -95,5 +101,6 @@
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 40px;
+    padding: 4px 20px;
   }
 </style>
