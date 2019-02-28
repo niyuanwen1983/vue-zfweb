@@ -4,12 +4,27 @@
       <a href="/"><img src="../../assets/img/Common/zf_logo.png" alt=""><img src="../../assets/img/Common/zf_logo_5.png"
                                                                              alt=""></a>
       <div class="fixed_right">
-        <a id="index" class="color_black" href="/">首页</a>
-        <a id="lend" class="color_black" href="/Invest/list">我要出借</a>
-        <a id="borrow" class="color_black" href="/Borrow">我要借款</a>
-        <a id="info" class="color_black" href="/Disclosure/about">信息披露</a>
-        <a id="aboutus" class="color_black" href="/Aboutus">关于我们</a>
-        <a id="myaccount" class="color_black myaccount no_login_account" href="/Account/myaccount">我的账户</a>
+        <router-link to='/'>
+          <a id="index" :class="{ color_black: this.$route.path!=='/',color_orange:this.$route.path==='/' }"
+             href="/">首页</a>
+        </router-link>
+        <router-link to='/Invest/InvestList'>
+          <a
+            :class="{ color_black: this.$route.path!=='/Invest/InvestList',color_orange:this.$route.path==='/Invest/InvestList' }"
+            href="javascript:void(0);">我要出借</a>
+        </router-link>
+        <router-link to='/'>
+          <a id="borrow" class="color_black" href="/Borrow">我要借款</a>
+        </router-link>
+        <router-link to='/'>
+          <a id="info" class="color_black" href="/Disclosure/about">信息披露</a>
+        </router-link>
+        <router-link to='/'>
+          <a id="aboutus" class="color_black" href="/Aboutus">关于我们</a>
+        </router-link>
+        <router-link to='/'>
+          <a id="myaccount" class="color_black myaccount no_login_account" href="/Account/myaccount">我的账户</a>
+        </router-link>
       </div>
       <div class="lend_expand">
         <a id="firstinvest" href="/Novice/list">新手专享</a>
@@ -110,6 +125,10 @@
   export default {
     name: "FixedHeader",
     mounted() {
+      //显示当前选中标签
+
+
+      //滚动监听
       window.addEventListener("scroll", function () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
 

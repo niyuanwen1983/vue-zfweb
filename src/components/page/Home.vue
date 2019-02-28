@@ -125,7 +125,7 @@
                 <p class="investment_desc">协议约定年利率</p><img class="question_mark pop-title"
                                                            src="Content/Img/Common/question_mark.png" alt="">
                 <div class="titleTips" style="display: none;">借款人履约意愿及能力等因素、借款人提前还款等情况都会影响最终收益率</div>
-                <p class="return_type">{{item.repayment == 1 | repayment}}</p>
+                <p class="return_type">{{item.repayment | repayment}}</p>
                 <div class="invest_progress_short"></div>
                 <div class="invest_progress_short_now" :style="{width: item.tenderspeed* 166 / 100 + 'px' }">
                 </div>

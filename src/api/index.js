@@ -64,6 +64,10 @@ export const getOthers = () => {
   return axios.get('/IndexPicture')
 }
 
+export const getInvestList = () => {
+  return axios.get('/projectList')
+}
+
 export const doLogin = (userAccount, userPassword) => {
   return axios.post('/DoLogin', {'userAccount': userAccount, 'userPassword': userPassword})
 }
