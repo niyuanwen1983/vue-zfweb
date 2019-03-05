@@ -68,6 +68,10 @@ export const getInvestList = () => {
   return axios.get('/projectList')
 }
 
+export const getInvestDetail = (loansn) => {
+  return axios.get('/projectDetail?loansn=' + loansn)
+}
+
 export const doLogin = (userAccount, userPassword) => {
   return axios.post('/DoLogin', {'userAccount': userAccount, 'userPassword': userPassword})
 }

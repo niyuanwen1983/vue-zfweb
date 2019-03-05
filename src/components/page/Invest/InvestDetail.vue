@@ -3,74 +3,544 @@
     <Header></Header>
     <FixedHeader></FixedHeader>
     <div class="content">
-      <div class="wrap listBox">
-        <a class="openBtn">立即开启</a>
-        <div class="mainCon">
-          <div class="choose">
-            <ul class="chooseType clearfix">
-              <li><a href="/Novice/list">新手专享</a><i></i></li>
-              <li class="red"><a href="javascript:;">汽车项目</a><i></i></li>
-              <li><a href="/Creditor/list">债权转让</a><i></i></li>
-            </ul>
-          </div>
-          <div class="list">
-            <div class="quickBar">
-              <ul class="order clearfix" id="order">
-                <li>
-                  <a href="javascript:;" data-val="1" data-order="yearrate">协议约定年利率</a>
-                  <i></i>
-                </li>
-                <li>
-                  <a href="javascript:;" data-val="2" data-order="bq">借款期限</a>
-                  <i></i>
-                </li>
-                <li>
-                  <a href="javascript:;" data-val="3" data-order="loanmoney">借款金额</a>
-                  <i></i>
-                </li>
-                <li>
-                  <a href="javascript:;" data-val="4" data-order="sykt">剩余可投</a>
-                  <i></i>
-                </li>
-                <li>
-                  <a href="javascript:;" data-val="5" data-order="">默认</a>
-                </li>
-              </ul>
+      <div class="bg"></div>
+      <div class="detailBox">
+        <div class="sell clearfix">
+          <div class="conL">
+            <div class="title">
+              <div class="tit"></div>
+              <div class="way"></div>
+              <div class="zx_way"></div>
+              <div class="app_way" style="display:none;"></div>
+              <p class="way_code" style="display: none;"></p>
+              <div class="num"></div>
             </div>
-            <div class="listBox carproject">
-              <div class="bidList">
-                <a v-for="(item,index) in investList" class="soon_accept" href="javascript:void(0);"
-                   data-loansn="item.loansn" :index="index" @click="gotoDetail(item.loansn)">
-                  <dl>
-                    <dd class="ddTit"><p>{{item.title}}</p>
-                      <div class="hk_way">{{item.repayment | repayment}}</div>
-                      <div class="zx_way" :style="{display:item.iInvestmentType === 0?'block':'none'}">自动专享</div>
-                      <div class="app_way" :style="{display:item.iInvestmentType === 1?'block':'none'}">APP专享</div>
-                      <div class="app_way" :style="{display:item.iInvestmentType === 2?'block':'none'}">WEB专享</div>
-                    </dd>
-                    <dd class="ddRate">协议约定年利率<br><span class="s1">{{item.yearrate}}</span><span class="s2">%</span>
-                    </dd>
-                    <dd class="ddTerm">借款期限<br><span class="s1">{{item.loanmonth}}</span><span class="s2">{{item.dayOrMonth}}</span>
-                    </dd>
-                    <dd class="dd4">借款金额<br><span class="s">{{item.loanmoney}}元</span></dd>
-                    <dd class="dd4">剩余可投<br><span class="s">{{item.sykt}}元</span></dd>
-                    <dd class="dd5">
-                      <div class="ddTime" style="display:none"><span><img src="/Content/Img/Invest/ds.png" alt=""><em
-                        class="ds_open" style="display: none;"></em><em class="djs_open"></em></span></div>
-                      <div class="ddCountdown" style="display:none"><img src="/Content/Img/Invest/djs.png"/><em
-                        class="ds_open"></em><em class="djs_open" style="display:none;"></em></div>
-                      <div class="ddProgress"><strong></strong></div>
-                    </dd>
-                    <dd class="ddBtn">
-                      <button class="btn_lend {10}">{{item.loanstatus_str}}</button>
-                    </dd>
-                  </dl>
-                </a>
+            <div class="main" style="position:relative;">
+              <div class="time">
+                <span id="open_time" style="display:none;">发布时间：<i></i></span>
+                <span class="open_soon" style="display:none;">
+                                <img id="img_count_down" src="../../../assets/img/Invest/jjfb.png" width="80"
+                                     height="27"/>
+                                <em class="orange"></em>
+                                <span id="hidden_countdown" style="display: inline-block;"></span>
+                            </span>
+                <span style="display:none;">
+                                <img src="../../../assets/img/Invest/djss.png" width="80" height="27"/>
+                                <em class="red"></em>
+                            </span>
+                <span id="end_time" style="display:none;">截止时间：<i></i></span>
+              </div>
+              <ul class="clearfix">
+                <li><span id="year_rate"></span>协议约定年利率</li>
+                <li><span id="loanmonth"></span>借款期限(月)</li>
+                <li><span id="loanmoney" style="color:#333333;"></span>借款金额(万元)</li>
+              </ul>
+              <div class="progressBar">
+                <span class="barOut"><span class="barIn" style="width:50%;"></span></span>
+                <span class="percent"></span>
+              </div>
+              <div class="surplus">
+                <span>剩余可投额度(元)：<i id="lastmoney"></i></span>
+                <span class="repay_way">
+                                还款方式：<i></i>
+                            <span class="repay_desc">说明</span>
+                            </span>
+                <div class="titleTips" style="display: none;"></div>
+                <span>起息日：<i>满标当日计息</i></span>
+              </div>
+              <span id="newtender" style="display:none;"></span>
+            </div>
+            <div class="agreement">
+              <p class="xy">
+                相关协议：
+                <a href="https://w3.zhifudai.com/More/qalist?code=154570747943">《风险提示及承诺》</a>
+                <a href="https://w3.zhifudai.com/More/qalist?code=154803986992">《借款协议范本》</a>
+                <a href="/Disclosure/Law#laws" target="_blank">法律法规</a>
+              </p>
+              <div class="bor"></div>
+              <p class="zs" style="font-weight:bold;">该借款标的可债权转让！出借人债权转让可能存在无人承接的流动性风险！<br>出借有风险，借款人履约意愿，能力等因素可能会影响您的实际收益，请谨慎出借！
+              </p>
+            </div>
+          </div>
+          <div class="conR">
+            <!-- 未登录 -->
+            <div class="loginBefore" style="display:none;">
+              <div class="money">
+              </div>
+              <div class="guide dlImg"></div>
+              <div class="income">
+                <p>成为会员即可获得<span class="span_red">加息</span>等福利</p>
+                <button id="login" class="btn">立即登录</button>
               </div>
             </div>
-            <div class="pagination">
+            <!-- 已登录 -->
+            <div class="loginAfter">
+              <!-- 立即出借 -->
+              <div id="soon_lend" class="has_bank" style="display: none;">
+                <div class="money balance">
+                  <span>可用余额：<em class="pd_ca_balance"></em>元</span>
+                  <a class="ld_0001_a_recharge" href="/Account/recharge">充值</a>
+                </div>
+                @*专享福利*@
+                <div class="welfare">
+                  <p>专享福利<a class="seeDetailBtn">查看详情></a></p>
+                  <ul class="clearfix">
+                    <li id="init" style="display:none;">新手奖励</li>
+                    <li id="begin" style="display:none;">起借奖励</li>
+                    <li id="first" style="display:none;">首杀奖励</li>
+                    <li id="most" style="display:none;">魁杀奖励</li>
+                    <li id="last" style="display:none;">绝杀奖励</li>
+                    <li id="redpacket_detail">红包奖励</li>
+                    <li id="card">卡券奖励</li>
+                    <li id="member">会员奖励</li>
+                  </ul>
+                </div>
+                <div class="interest" style="display:none;">
+                  <ul class="clearfix" style="visibility: hidden;">
+                    <li>新手加息<span>+1%</span></li>
+                    <li>会员增加利息<span>+1%</span></li>
+                    <li>首投加息<span>+1%</span></li>
+                    <li>起借金额加息<span>+1%</span></li>
+                    <li>最大出借加息<span>+1%</span></li>
+                    <li>尾投加息<span>+1%</span></li>
+                  </ul>
+                </div>
+                <div class="income">
+                  <p>预计收益：<em id="common_money_profit_invest">0</em>元</p>
+                  <div class="cj_box">
+                    <input id="top_invest_money" type="text" placeholder="100元整数倍" class="tzInput">
+                    <input type="button" placeholder="" value="全投" class="fullBtn">
+                    <button class="nowBtn">立即出借</button>
+                  </div>
+                  <div class="chk_box">
+                    <label><input type="checkbox" style="visibility:hidden;" id="choose"><span></span>我已阅读并同意</label>
+                    <a href="https://w3.zhifudai.com/More/qalist?code=154570747943" id="tipAgreement">《风险提示及承诺》</a>
+                  </div>
+                  <button class="autoBtn">立即设置自动投标</button>
+                  <button class="appBtn" style="display:none;">下载投资APP进行出借</button>
+                </div>
+                <div class="friendlyTip">
+                  @*<span>网贷有风险 出借需谨慎</span>*@
+                </div>
+              </div>
+              <!-- 招标完成 -->
+              <div id="project_complete" class="has_bank" style="display:none;">
+                <div class="money balance">
+
+                </div>
+                <div class="guide cjImg"></div>
+                <div class="income">
+                  <p id="over_text"></p>
+                  <button class="btn btn_more">查看其它热门项目</button>
+                </div>
+                <div class="friendlyTip">
+                  @*<span>网贷有风险 出借需谨慎</span>*@
+                </div>
+              </div>
+              <!-- 还款中 -->
+              <div id="repaying" class="has_bank" style="display:none;">
+                <div class="money balance">
+
+                </div>
+                <div class="guide cjImg"></div>
+                <div class="income">
+                  <p>还款中</p>
+                  <button class="btn btn_more">查看其它热门项目</button>
+                </div>
+                <div class="friendlyTip">
+                  @*<span>网贷有风险 出借需谨慎</span>*@
+                </div>
+              </div>
+              <!-- 未开通银行资金存管 -->
+              <div id="has_not_bank" style="display:none;">
+                <div class="money balance">
+                </div>
+                <div class="guide cjImg"></div>
+                <div class="income">
+                  <p></p>
+                  <button id="btn_bank" class="btn">开通银行资金存管</button>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="bidDetail clearfix">
+          <div class="detailTitle">
+            <span class="current">项目详情</span>
+            <span>借款人及担保物信息</span>
+            <span>出借记录</span>
+            <span>还款计划</span>
+            <span id="project_change_info" style="display:none;">项目信息变化</span>
+          </div>
+          <div class="detailCon">
+            <!-- 项目详情 -->
+            <div class="info">
+              <div class="box projectBox">
+                <ol>
+                  <li>
+                    @*
+                    <div>项目名称：<span class="project_name"></span></div>
+                    *@
+                    <div style="width:100%;">
+                      项目风险等级：<span id="risk_grade"></span><b
+                      style="font-weight:normal;font-size:12px;margin-left:15px;">
+                      星级越高则风险越低，根据项目风险等级以及<a style="color:orange;"
+                                             href="https://w3.zhifudai.com/More/qalist?code=154570921262"
+                                             target="_blank">《出借人分级管理制度》</a>将设置不同的出借限制。
+                    </b>
+                    </div>
+                  </li>
+                  <li>
+                    <div>项目介绍： <span id="remark_2"></span></div>
+                  </li>
+                  <li>
+                    <div>还款来源 ：<span class="sHuanKLaiYuan"></span></div>
+                    <div>借款用途：<span class="sYongTu"></span></div>
+                  </li>
+                  <li>
+                    <div>借款人账号：<span class="sAccount"></span></div>
+                    <div>所在地：<span class="sLocation"></span></div>
+                  </li>
+                  <li>
+                    <div>协议约定年利率：<span class="sYearRate"></span></div>
+                    <div>借款金额：<span class="sJKAmount"></span></div>
+                  </li>
+                  <li>
+                    <div>借款期限：<span class="sQiXian"></span></div>
+                    <div>募集时间：<span class="sTime"></span></div>
+                  </li>
+                  <li>
+                    <div>担保措施：<span>车辆抵押，保证人为江苏智华非融资性担保有限公司，借款人以车辆抵押的方式向保证人提供反担保，该担保车辆已履行相关法律手续</span></div>
+                  </li>
+                  <li style="background:transparent;">
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <!-- 借款人及担保物信息 -->
+            <div class="info project_record" style="display:none;">
+              <!-- 借款人信息 -->
+              <div class="detail_enterprise box">
+                <h3>借款人信息</h3>
+                <ol>
+                  <li>
+                    <div>主体性质：<span class="sNature"></span></div>
+                    <div>企业名称：<span class="sEnterpriseName"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">统一社会信用代码：<span class="sMechanismCode"></span></div>
+                    <div style="width:420px;">所属行业：<span class="sIndustryName"></span></div>
+                  </li>
+                  <li>
+                    <div>平台历史还款次数 ：<span class="sHuanKLaiYuan"></span></div>
+                    <div>平台历史逾期次数：<span class="sLateCount"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">平台当前逾期金额：<span class="sCurrentLateMoney"></span></div>
+                    <div style="width:420px;">平台历史逾期三天以上次数：<span class="sLateCountLarge3"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:100%;">本平台还款中金额：<span class="sRepayingMoeny"></span></div>
+                  </li>
+                  <li style="height:100px;">
+                    <div style="width:100%;line-height:28px;">
+                      借款人承诺：在网络借贷信息中介平台（含本平台）借款总余额符合以下规定：同一自然人在不同网络借贷信息中介机构平台借款总余额不超过100万元；同一法人或其他组织在不同网络借贷信息中介机构平台借款总余额不超过500万元。
+                    </div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>借款人信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 担保物信息 -->
+              <div class="detail_enterprise box">
+                <h3>担保物信息</h3>
+                <ol>
+                  <li>
+                    <div>担保物类型：<span class="sDanBaoType"></span></div>
+                    <div>车辆型号：<span class="sCheJiaNum"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">车牌号码：<span class="sMechanismCode"></span></div>
+                    <div style="width:420px;">车辆首次登记时间：<span class="sEnterpriseName"></span></div>
+                  </li>
+                  <li>
+                    <div>车辆品牌 ：<span class="sCarBrand"></span></div>
+                    <div>新车价格：<span class="sNewCarPrice"></span></div>
+                  </li>
+                  <li>
+                    <div>行驶里程：<span class="sKilometer"></span></div>
+                    <div>评估价格：<span class="sPGPrice"></span></div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>担保物信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 借款人人行征信 -->
+              <div class="detail_enterprise box">
+                <h3>借款人人行征信</h3>
+                <ol>
+                  <li style="height:95px;">
+                    <div class="sEnterprise" style="width:100%;line-height:20px;padding:20px 0;">
+                    </div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>人行征信信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 审核内容 -->
+              <div class="detail_enterprise box">
+                <h3>审核内容</h3>
+                <ol>
+                  <li>
+                    <div><p class="check_title">身份证：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">法院执行网查：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">
+                      <p class="check_title">风控网查：</p><span class="mo_checked">已审核</span>
+                    </div>
+                    <div style="width:420px;">
+                      <p class="check_title">担保物审核：</p><span class="mo_checked">已审核</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div><p class="check_title">GPS安装 ：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">担保物评估：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li>
+                    <div><p class="check_title">保单：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">违章查询：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li></li>
+                </ol>
+              </div>
+              <!-- 借款人信息 -->
+              <div class="detail_person box">
+                <h3>借款人信息</h3>
+                <ol>
+                  <li>
+                    <div>主体性质：<span class="sNature"></span></div>
+                    <div>所属行业：<span class="sHangYe"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">借款人每月总收入：<span class="sZShouRu"></span></div>
+                    <div style="width:420px;">年龄：<span class="sAge"></span></div>
+                  </li>
+                  <li>
+                    <div>证件号码 ：<span class="sCardID"></span></div>
+                    <div>婚姻状况：<span class="sMarital"></span></div>
+                  </li>
+                  <li>
+                    <div>姓名：<span class="sJKRName"></span></div>
+                    <div>平台历史逾期次数：<span class="sLateCount sLateCount_person"></span></div>
+                  </li>
+                  <li>
+                    <div>学历：<span class="sXueLi"></span></div>
+                    <div>平台历史还款次数：<span class="sRepaymentCount"></span></div>
+                  </li>
+                  <li>
+                    <div>性别：<span class="sSex"></span></div>
+                    <div>本平台还款中金额：<span class="sRepayingMoeny"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">平台历史逾期三天以上次数：<span class="sLateCountLarge3"></span></div>
+                    <div style="width:420px;">平台当前逾期金额：<span class="sCurrentLateMoney"></span></div>
+                  </li>
+                  <li style="height:100px;">
+                    <div style="width:100%;line-height:28px;">
+                      借款人承诺：在网络借贷信息中介平台（含本平台）借款总余额符合以下规定：同一自然人在不同网络借贷信息中介机构平台借款总余额不超过100万元；同一法人或其他组织在不同网络借贷信息中介机构平台借款总余额不超过500万元。
+                    </div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>借款人信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 担保物信息 -->
+              <div class="detail_person box">
+                <h3>担保物信息</h3>
+                <ol>
+                  <li>
+                    <div>担保物类型：<span class="sDanBaoType"></span></div>
+                    <div>车辆型号：<span class="sCheJiaNum"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">车牌号码：<span class="sLicense"></span></div>
+                    <div style="width:420px;">车辆首次登记时间：<span class="sCarNianXian"></span></div>
+                  </li>
+                  <li>
+                    <div>车辆品牌 ：<span class="sCarBrand"></span></div>
+                    <div>新车价格：<span class="sNewCarPrice"></span></div>
+                  </li>
+                  <li>
+                    <div>行驶里程：<span class="sKilometer"></span></div>
+                    <div>评估价格：<span class="sPGPrice"></span></div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>担保物信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 借款人人行征信 -->
+              <div class="detail_person box">
+                <h3>借款人人行征信</h3>
+                <ol class="person_auth">
+                  <li>
+                    <div style="width:420px;">贷款逾期笔数：<span class="sLoanOverdueNum"></span></div>
+                    <div style="width:420px;">贷记卡逾期账户数：<span class="sDJKOverdueAccountNum"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">贷款逾期月数：<span class="sLoanOverdueMonths"></span></div>
+                    <div style="width:420px;">贷记卡逾期月份数：<span class="sDJKOverdueMonthNum"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">贷款单月最高逾期总额：<span class="sLoanMostOverdueMoney"></span></div>
+                    <div style="width:420px;">贷记卡单月最高逾期总额：<span class="sDJKMostOverdueMoney"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">贷款最长逾期月数：<span class="sLoanMostOverdueMonths"></span></div>
+                    <div style="width:420px;">贷记卡最长逾期月数：<span class="sDJKMostOverdueMonths"></span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">
+                      准贷记卡60天以上透支账户数：<span class="sZJKOverdueAccountNum"></span>
+                    </div>
+                    <div style="width:420px;">
+                      未结清贷款最近6个月平均应还款：<span class="sUnSettle6YueYinHuan"></span>
+                    </div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">准贷记卡60天以上透支月份数：<span class="sZJKOverdueMonthNum"></span></div>
+                    <div style="width:420px;">
+                      未销户贷记卡最近6个月平均使用额度：<span class="sUnXiaoHuDJK6YueuseMoeny"></span>
+                    </div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">准贷记卡单月最高透支余额：<span class="sZJKMostOverdueMoney"></span></div>
+                    <div style="width:420px;">
+                      未销户准贷记卡最近6个月平均透支金额：<span class="sUnXiaoHuZJK6YueuseMoeny"></span>
+                    </div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">准贷记卡最长透支月数：<span class="sZJKMostOverdueMonths"></span></div>
+                  </li>
+                  <li id="no_auth" style="display:none;">
+                    <div style="width:420px;">
+                      借款人未授权调取，暂无法披露<span class="sZJKMostOverdueMonths"></span>
+                    </div>
+                  </li>
+                  <li style="background:transparent;">
+                    <div>人行征信信息收集时间 ：<span class="sShangBiaoTime"></span></div>
+                  </li>
+                </ol>
+              </div>
+              <!-- 审核内容 -->
+              <div class="detail_person box">
+                <h3>审核内容</h3>
+                <ol>
+                  <li>
+                    <div><p class="check_title">身份证：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">法院执行网查：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li>
+                    <div style="width:420px;">
+                      <p class="check_title">风控网查：</p><span class="mo_checked">已审核</span>
+                    </div>
+                    <div style="width:420px;">
+                      <p class="check_title">担保物审核：</p><span class="mo_checked">已审核</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div><p class="check_title">GPS安装 ：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">担保物评估：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li>
+                    <div><p class="check_title">保单：</p><span class="mo_checked">已审核</span></div>
+                    <div><p class="check_title">违章查询：</p><span class="mo_checked">已审核</span></div>
+                  </li>
+                  <li style="background-color: #F6FBFD;height: 0px;"></li>
+                </ol>
+              </div>
+            </div>
+            <!-- 出借记录 -->
+            <div class="info project_record" style="display:none;">
+              <div class="box recordBox">
+                <table id="invest_list" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>序号</th>
+                    <th></th>
+                    <th>出借人</th>
+                    <th>出借金额</th>
+                    <th>出借时间</th>
+                    <th>来源</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <!-- 还款计划 -->
+            <div class="info project_record" style="display:none;">
+              <div class="box repayBox">
+                <table id="repay_list" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>期数</th>
+                    <th>协议约定还款日</th>
+                    <th>预计最晚还款时间</th>
+                    <th>协议约定还款本息（元）</th>
+                    <th>状态</th>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <!-- 项目信息变化 -->
+            <div class="info project_record" style="display:none;">
+              <div class="box projectInfo">
+                <h3>借款项目正在还款中，项目有关信息变化如下 :</h3>
+                <ol>
+                  <li>
+                    <div>借款资金运用情况：<span id="sYongTu"></span></div>
+                    <div>借款人逾期情况：<span id="sOverdueStatus"></span></div>
+                  </li>
+                  <li>
+                    <div>借款人经营状况及财务状况：<span id="sJYStatus"></span></div>
+                    <div>借款人涉诉情况：<span id="sSheSuStatus"></span></div>
+                  </li>
+                  <li>
+                    <div>借款人还款能力变化情况：<span id="sRepaymentAbility"></span></div>
+                    <div>借款人受行政处罚：<span id="sChuFaStatus"></span></div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <!-- 未登录 -->
+            <div id="not_logined" style="display:none;">
+              <div class="unloginBox">
+                <div class="wdl_zw">
+                  <img src="../../../assets/img/Invest/wdl.png"/>
+                  <p><a class="pd_0001_a_login">登录</a>后即可查看完整信息</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fix" style="display: none;">
+        <div class="fixCon">
+          <ul class="clearfix">
+            <li>协议约定年利率<span class="red"><i id="i_yearrate"></i>%</span></li>
+            <li>期限<span class="red"><i id="i_month"></i>月</span></li>
+            <li>剩余可投<span class="black">50000.00</span>元</li>
+            <li>预计最大收益<span class="black">50000.00</span>元</li>
+            <li>
+              <div>
+                <input type="text" placeholder="100元整数倍" class="tzInput">
+                <input type="button" placeholder="" value="全投" class="fullBtn">
+              </div>
+              <button>立即出借</button>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -85,7 +555,7 @@
   import Footer from "../../common/Footer"
 
   export default {
-    name: "InvestList",
+    name: "InvestDetail",
     components: {
       FixedHeader,
       Header,
@@ -93,20 +563,17 @@
     },
     data() {
       return {
-        isLoading: true,
-        investList: []
+        isLoading: true
       }
     },
     methods: {
       async getData() {
-        let projects = await getApi.getInvestList()
+        console.log(this.$route.query.loansn)
+        let projects = await getApi.getInvestDetail(this.$route.query.loansn)
 
         this.isLoading = false
-        this.investList = projects.qichejinrong_list
+
         debugger
-      },
-      gotoDetail(loansn) {
-        this.$router.push({name: 'InvestDetail', query: {loansn: loansn}})
       }
     },
     mounted() {
@@ -1469,6 +1936,13 @@
     display: inline-block;
   }
 
+  .mo_checked:after {
+    content: url("/Content/Img/Invest/checked.png");
+    position: relative;
+    top: 2px;
+    left: 8px;
+  }
+
   .fullBtn:hover {
     cursor: pointer;
   }
@@ -1569,6 +2043,7 @@
     width: 68px;
     height: 20px;
     background: rgba(255, 219, 222, 1);
+    background: linear-gradient(92deg, rgba(255, 219, 222, 1) 0);
     float: left;
     font-size: 12px;
     color: #FD4E5D;
@@ -1576,6 +2051,12 @@
     text-align: center;
     margin-right: 20px;
     margin-bottom: 20px;
+  }
+
+  .welfare ul li.first_child {
+    background: #E1E1E1;
+    background: linear-gradient(92deg, rgba(225, 225, 225, 1) 0%);
+    color: #999999;
   }
 
   .w_tk {
