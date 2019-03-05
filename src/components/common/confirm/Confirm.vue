@@ -10,8 +10,8 @@
           <i v-if="type!=''" class="icon-type iconfont" :class="'icon-'+type"></i>{{content}}
         </div>
         <div class="ft" style="text-align:center;">
-          <a href="javscript:void(0)" class="btn btn-primary" @click="handleAction('yes')">{{yesBtnText}}</a>
-          <a href="javscript:void(0)" class="btn btn-default" @click="handleAction('cancel')">{{cancelBtnText}}</a>
+          <a href="#" class="btn btn-primary" @click="handleAction('yes')">{{yesBtnText}}</a>
+          <a href="#" class="btn btn-default" @click="handleAction('cancel')">{{cancelBtnText}}</a>
         </div>
       </div>
       <div class="backdrop" @click="handleAction('close')"></div>
