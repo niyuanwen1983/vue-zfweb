@@ -18,12 +18,20 @@
         </div>
         <div class="myaccount_list">
           <ul>
-            <li class="li_selected"><a href="myaccount">账户总览</a></li>
+            <li><a href="myaccount">账户总览</a></li>
             <li><a href="enterpriseAuth">认证中心</a></li>
             <li><a href="borrow">存管户授权</a></li>
             <li><a class="ac_0001_nav_message red_dot" href="messageCenter">消息中心</a></li>
-            <li class="user_attr_hidden"><a href="myTrade">我的交易</a></li>
-            <li class="user_attr_hidden"><a href="myProfit">我的收益</a></li>
+            <li class="user_attr_hidden" :class="{ li_selected: this.$route.path==='/MyAccount/MyTrade' }">
+              <router-link to='/MyAccount/MyTrade'>
+                我的交易
+              </router-link>
+            </li>
+            <li class="user_attr_hidden" :class="{ li_selected: this.$route.path==='/MyAccount/MyProfit' }">
+              <router-link to='/MyAccount/MyProfit'>
+                我的收益
+              </router-link>
+            </li>
             <li><a href="fundDetails">资金明细</a></li>
             <li class="user_attr_hidden"><a href="autoSign">自动投标</a></li>
             <li class="user_attr_hidden"><a href="debtTransfer">债权转让</a></li>
@@ -220,7 +228,7 @@
     width: 250px;
     color: rgba(251, 66, 81, 1) !important;
     top: -22px !important;
-    left: 54px !important;
+    left: 48px !important;
   }
 
   /*更换头像*/

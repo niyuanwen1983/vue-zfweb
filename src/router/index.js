@@ -5,6 +5,8 @@ import Login from '../components/page/Login'
 import InvestList from '../components/page/Invest/InvestList'
 import InvestDetail from '../components/page/Invest/InvestDetail'
 import MyAccount from '../components/page/Account/MyAccount'
+import MyProfit from '../components/page/Account/MyProfit'
+import MyTrade from '../components/page/Account/MyTrade'
 
 Vue.use(Router)
 
@@ -30,10 +32,20 @@ export default new Router({
       name: 'InvestDetail',
       component: InvestDetail
     },
-    {
+    /*{
       path: '/Account/MyAccount',
       name: 'MyAccount',
       component: MyAccount
+    },*/
+    {
+      path: '/MyAccount',
+      component: MyAccount,
+      name: 'MyAccount',
+      redirect: '/MyAccount/MyProfit',
+      children: [
+        {path: '/MyAccount/MyProfit', component: MyProfit, name: '我的收益'},
+        {path: '/MyAccount/MyTrade', component: MyTrade, name: '我的交易'}
+      ]
     },
     {
       path: '*',
