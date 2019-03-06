@@ -22,7 +22,7 @@
         <router-link to='/'>
           <a id="aboutus" class="color_black" href="/Aboutus">关于我们</a>
         </router-link>
-        <router-link to='/'>
+        <router-link to='/Account/MyAccount'>
           <a id="myaccount" class="color_black myaccount no_login_account" href="/Account/myaccount">我的账户</a>
         </router-link>
       </div>

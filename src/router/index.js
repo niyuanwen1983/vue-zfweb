@@ -4,6 +4,7 @@ import Home from '../components/page/Home'
 import Login from '../components/page/Login'
 import InvestList from '../components/page/Invest/InvestList'
 import InvestDetail from '../components/page/Invest/InvestDetail'
+import MyAccount from '../components/page/Account/MyAccount'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/Invest/InvestDetail',
       name: 'InvestDetail',
       component: InvestDetail
+    },
+    {
+      path: '/Account/MyAccount',
+      name: 'MyAccount',
+      component: MyAccount
     },
     {
       path: '*',
