@@ -8,16 +8,16 @@
         <div class="sell clearfix">
           <div class="conL">
             <div class="title">
-              <div class="tit"></div>
-              <div class="way"></div>
-              <div class="zx_way"></div>
-              <div class="app_way" style="display:none;"></div>
-              <p class="way_code" style="display: none;"></p>
+              <div class="tit">{{projectDetail.title}}</div>
+              <div class="way" v-if="false"></div>
+              <div class="zx_way" v-if="false"></div>
+              <div class="app_way" v-if="false"></div>
+              <p class="way_code" v-if="false"></p>
               <div class="num"></div>
             </div>
             <div class="main" style="position:relative;">
               <div class="time">
-                <span id="open_time" style="display:none;">发布时间：<i></i></span>
+                <span id="open_time" style="display:none;">发布时间：<i>{{projectDetail.passtime}}</i></span>
                 <span class="open_soon" style="display:none;">
                                 <img id="img_count_down" src="../../../assets/img/Invest/jjfb.png" width="80"
                                      height="27"/>
@@ -31,9 +31,9 @@
                 <span id="end_time" style="display:none;">截止时间：<i></i></span>
               </div>
               <ul class="clearfix">
-                <li><span id="year_rate"></span>协议约定年利率</li>
-                <li><span id="loanmonth"></span>借款期限(月)</li>
-                <li><span id="loanmoney" style="color:#333333;"></span>借款金额(万元)</li>
+                <li><span id="year_rate">{{projectDetail.yearrate | suffix_percent}}</span>协议约定年利率</li>
+                <li><span id="loanmonth">{{projectDetail.loanmonth}}</span>借款期限(月)</li>
+                <li><span id="loanmoney" style="color:#333333;">{{projectDetail.loanmoney}}</span>借款金额(元)</li>
               </ul>
               <div class="progressBar">
                 <span class="barOut"><span class="barIn" style="width:50%;"></span></span>
@@ -563,13 +563,14 @@
     },
     data() {
       return {
-        isLoading: true
+        isLoading: true,
+        projectDetail: []
       }
     },
     methods: {
       async getData() {
         console.log(this.$route.query.loansn)
-        let projects = await getApi.getInvestDetail(this.$route.query.loansn)
+        this.projectDetail = await getApi.getInvestDetail(this.$route.query.loansn)
 
         this.isLoading = false
 
