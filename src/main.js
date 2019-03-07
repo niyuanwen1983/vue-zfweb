@@ -9,6 +9,10 @@ import * as custom from './common/filters/custom'
 
 Vue.use(Loading);*/
 
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 Vue.config.productionTip = false
 
 //全局过滤器

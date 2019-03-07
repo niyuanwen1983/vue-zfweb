@@ -75,3 +75,7 @@ export const getInvestDetail = (loansn) => {
 export const doLogin = (userAccount, userPassword) => {
   return axios.post('/DoLogin', {'userAccount': userAccount, 'userPassword': userPassword})
 }
+
+export const getProfit = () => {
+  return axios.get('/myprofit')
+}

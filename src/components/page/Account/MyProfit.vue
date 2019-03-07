@@ -48,8 +48,75 @@
 </template>
 
 <script>
+  import * as getApi from "../../../api";
+
   export default {
-    name: "MyProfit"
+    name: "MyProfit",
+    data() {
+      return {
+        listMonth: [],
+        listData: [],
+        listData2: []
+      }
+    },
+    mounted() {
+      this.getData()
+    },
+    methods: {
+      async getData() {
+        let result = await getApi.getProfit()
+
+        this.listMonth = result.Result1
+        this.listData = result.Result2
+        this.listData2 = result.Result3
+
+        this.drawLine()
+      },
+      drawLine() {
+        let myChart = this.$echarts.init(document.getElementById('chart'));
+
+        var option = {
+          legend: {
+            data: ['b', 'c']
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          xAxis: {
+            type: 'category',
+            data: this.listMonth
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              name: 'b',
+              data: this.listData,
+              type: 'line',
+              itemStyle: {
+                normal: {
+                  color: '#FF7178'
+                }
+              }
+            },
+            {
+              name: 'c',
+              data: this.listData2,
+              type: 'line',
+              itemStyle: {
+                normal: {
+                  color: 'blue'
+                }
+              }
+            }
+          ]
+        }
+
+        // 为echarts对象加载数据
+        myChart.setOption(option);
+      }
+    }
   }
 </script>
 
