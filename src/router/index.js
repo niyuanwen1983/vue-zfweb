@@ -43,9 +43,10 @@ export default new Router({
       name: 'MyAccount',
       redirect: '/MyAccount/MyProfit',
       children: [
-        {path: '/MyAccount/MyProfit', component: MyProfit, name: '我的收益'},
-        {path: '/MyAccount/MyTrade', component: MyTrade, name: '我的交易'}
-      ]
+        {path: '/MyAccount/MyProfit', component: MyProfit, name: '我的收益', meta: {requirePermission: true}},
+        {path: '/MyAccount/MyTrade', component: MyTrade, name: '我的交易', meta: {requirePermission: true}}
+      ],
+      meta: {requirePermission: true}
     },
     {
       path: '*',
