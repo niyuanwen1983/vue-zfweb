@@ -101,7 +101,11 @@
         sessionStorage.setItem('name', res.Info.name)
         sessionStorage.setItem('token', res.Token)
 
-        this.$router.push('/')
+        if (common.isEmpty(this.$route.query.returnPath)) {
+          this.$router.push('/')
+        } else {
+          this.$router.push(this.$route.query.returnPath)
+        }
       },
       showConfirm() {
         this.$my_confirm('是否登录?', {

@@ -33,9 +33,11 @@ Vue.prototype.$my_confirm = Confirm.install;
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
+  Vue.prototype.$loading.hide()
   const token = sessionStorage.getItem('token');
   if (!token && to.meta.requirePermission) {//需要权限的页面没有token，跳转到登录页面
-    next('/Login')
+    //next('/Login')
+    next({path: '/Login', query: {returnPath: to.path}})
   } else if (token && to.path === '/Login') {//已登录，不再跳转登录页面（直接返回首页）
     next('/')
   } else {
