@@ -60,6 +60,7 @@
               <div class="bor"></div>
               <p class="zs" style="font-weight:bold;">该借款标的可债权转让！出借人债权转让可能存在无人承接的流动性风险！<br>出借有风险，借款人履约意愿，能力等因素可能会影响您的实际收益，请谨慎出借！
               </p>
+              <RepayType></RepayType>
             </div>
           </div>
           <div class="conR">
@@ -178,9 +179,8 @@
               <div class="box projectBox">
                 <ol>
                   <li>
-                    @*
+                    <RepayList></RepayList>
                     <div>项目名称：<span class="project_name"></span></div>
-                    *@
                     <div style="width:100%;">
                       项目风险等级：<span id="risk_grade"></span><b
                       style="font-weight:normal;font-size:12px;margin-left:15px;">
@@ -553,13 +553,17 @@
   import Header from "../../common/Header"
   import FixedHeader from "../../common/FixedHeader"
   import Footer from "../../common/Footer"
+  import RepayType from "../Invest/RepayType"
+  import RepayList from "../Invest/RepayList"
 
   export default {
     name: "InvestDetail",
     components: {
       FixedHeader,
       Header,
-      Footer
+      Footer,
+      RepayType,
+      RepayList
     },
     data() {
       return {
@@ -573,8 +577,6 @@
         this.projectDetail = await getApi.getInvestDetail(this.$route.query.loansn)
 
         this.isLoading = false
-
-        debugger
       }
     },
     mounted() {
